@@ -3,9 +3,9 @@ AI宠物 - 状态卡片渲染器
 将宠物状态渲染为文本卡片（适配 QQ 消息）
 """
 
-from pet_model import (
+from .pet_model import (
     PetState, EMOTION_EMOJI, EMOTION_CN, LEVEL_NAMES,
-    get_level_info, add_exp
+    add_exp
 )
 
 
@@ -140,30 +140,30 @@ def render_level_up(pet: PetState) -> str:
     )
 
 
-def render_help() -> str:
+def render_help(pet_name: str = None) -> str:
     """帮助信息"""
-    return """🐾 AI宠物养成 - 帮助
+    owner = pet_name or "你的宠物"
+    return f"""🐾 AI宠物养成 - {owner} 帮助
 
 📋 基础命令:
-  /pet 或 /宠物状态     查看你的宠物状态
-  /pet help             显示此帮助
+  /pet                 显示此帮助
+  /状态                查看你的宠物状态
+  /改名 <名字>         给你的宠物改名字
 
 🍽️ 喂食:
-  /喂食 <食物>          喂宠物吃东西
-  可选食物: 苹果、蛋糕、寿司、冰淇淋、肉、饼干、牛奶、鱼、糖果、蔬菜
+  /喂食 <食物>         喂宠物吃东西
+  可选: 苹果、蛋糕、寿司、冰淇淋、肉、饼干、牛奶、鱼、糖果、奶茶、烤肠、薯片、可乐
 
 ✋ 互动:
-  /抚摸                  抚摸宠物
-  /抱抱                  抱抱宠物
-  /玩耍                  和宠物玩耍
-  /聊天                  和宠物聊天
-  /训练                  训练宠物
+  /抚摸    /抱抱    /玩耍
+  /睡觉    /醒来    /训练
 
-🔍 查看他人:
-  /宠物状态 @某人        查看某人的宠物
+🔍 查看:
+  /好感                查看{owner}对你的好感
+  /好感 @某人          查看{owner}对某人的好感
 
 💡 提示:
   - 宠物会随时间变饿、心情变差
-  - 喂食增加饱食度，互动增加好感度
+  - 喂食加饱食度，互动加好感度
   - 好感度高了宠物会更粘人
-  - 积累经验可以升级，解锁新称号"""
+  - 积累经验可升级，解锁新称号"""

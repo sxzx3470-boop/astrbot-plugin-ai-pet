@@ -7,13 +7,17 @@ import time
 from pathlib import Path
 from typing import Dict
 
-from pet_model import PetState, PetEmotion, apply_decay
+from .pet_model import PetState, PetEmotion, apply_decay
 
 
 class PetStorage:
-    def __init__(self, data_dir: str):
+    def __init__(self, data_dir: str, default_pet_name: str = None):
         self.data_dir = Path(data_dir)
         self.data_dir.mkdir(parents=True, exist_ok=True)
+        if not default_pet_name:
+            from .pet_model import DEFAULT_PET_NAME
+            default_pet_name = DEFAULT_PET_NAME
+        self.default_pet_name = default_pet_name
         self.pets_file = self.data_dir / "pets.json"
         self._cache: Dict[str, PetState] = {}
         self._load()
@@ -35,7 +39,7 @@ class PetStorage:
 
     def get(self, user_id: str) -> PetState:
         if user_id not in self._cache:
-            self._cache[user_id] = PetState(user_id)
+            self._cache[user_id] = PetState(user_id, self.default_pet_name)
             self.save()
         pet = self._cache[user_id]
         apply_decay(pet)
@@ -50,3 +54,19 @@ class PetStorage:
         pet = self.get(user_id)
         pet.pet_name = new_name
         self.save()
+    def cleanup_inactive(self, days: int = 30) -> list:
+        """
+        清理超过 days 天未互动的宠物数据，返回被清理的 QQ 号列表。
+        防止长期不活跃的数据无限积累占用存储。
+        """
+        cutoff = time.time() - days * 86400
+        removed = []
+        for uid in list(self._cache.keys()):
+            pet = self._cache[uid]
+            if pet.last_interact < cutoff:
+                removed.append(uid)
+        for uid in removed:
+            del self._cache[uid]
+        if removed:
+            self.save()
+        return removed

@@ -1,0 +1,20 @@
+{
+  "default_pet_name": {
+    "description": "新宠物的默认名字",
+    "hint": "每个用户第一次养宠物时的默认宠物名，用户可通过 /改名 随时修改自己的宠物名。",
+    "type": "string",
+    "default": "小宠物"
+  },
+  "allow_rename": {
+    "description": "是否允许用户给宠物改名字",
+    "hint": "关闭后 /改名 命令将不可用。",
+    "type": "bool",
+    "default": true
+  },
+  "cleanup_days": {
+    "description": "自动清理未互动天数",
+    "hint": "超过该天数没有互动的宠物数据会被每日任务自动删除，避免存档无限堆积。0 表示不清理。",
+    "type": "int",
+    "default": 30
+  }
+}
