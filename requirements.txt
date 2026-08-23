@@ -1,1 +1,3 @@
-# 本插件无外部依赖，此文件可留空
+# 依赖
+astrbot-api
+fonttools
