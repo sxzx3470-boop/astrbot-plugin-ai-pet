@@ -1,3 +1,2 @@
 # 依赖
-astrbot-api
 fonttools
