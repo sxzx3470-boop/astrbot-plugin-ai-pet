@@ -5,6 +5,6 @@ desc: |
   AI宠物养成插件 - 喂食、互动、好感度、情绪系统，支持状态卡片展示。
   每个用户拥有独立宠物，可自定义宠物名（/改名），
   支持等级成长、时间衰减、精美图片状态卡与好感卡展示。
-version: 1.1.1
+version: 1.1.2
 author: kim & 小泽
 repo: https://github.com/sxzx3470-boop/astrbot-plugin-ai-pet
